@@ -13,6 +13,18 @@ const io = new Server(server, {
   },
 });
 
-server.listen(3001, () => {
-  console.log("WebSocket szerver fut a 3001-es porton.");
+io.on("connection", (socket) => {
+  console.log("A user connected:", socket.id);
+
+  socket.on("disconnect", (socket) => {
+    console.log("user disconnected:", socket.id);
+  });
+});
+
+server.listen(3001, (err) => {
+  if (err) {
+    console.error("Error starting the server:", err);
+  } else {
+    console.log("WebSocket server is running on port 3001.");
+  }
 });
